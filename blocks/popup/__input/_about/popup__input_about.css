@@ -10,9 +10,3 @@
     border-bottom: 1px solid rgba(0, 0, 0, .2);
     padding-bottom: 13px;
 }
-
-/*@media screen and (max-width: 610px) {
-    .popup__input_about {
-        margin: 43px 22px 0;
-    }
-}
