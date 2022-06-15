@@ -12,7 +12,6 @@
     .popup__title {
         font-size: 18px;
         line-height: 22px;
-        text-align: center;
-        margin: 25px auto 0;
+        margin: 25px 22px 0;
     }
 }
