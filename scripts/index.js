@@ -21,8 +21,8 @@ closeButton.addEventListener('click', popupClosed)
 // Находим форму в DOM
 let formElement = document.querySelector('.popup__form')  // Воспользуйтесь методом querySelector()
 // Находим поля формы в DOM
-let nameInput = formElement.querySelector('.input__name') // Воспользуйтесь инструментом .querySelector()
-let jobInput = formElement.querySelector('.input__about') // Воспользуйтесь инструментом .querySelector()
+let nameInput = formElement.querySelector('.input_name') // Воспользуйтесь инструментом .querySelector()
+let jobInput = formElement.querySelector('.input_about') // Воспользуйтесь инструментом .querySelector()
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
