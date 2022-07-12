@@ -45,6 +45,7 @@ const linkInput = formAddElement.querySelector('.input_type_link')
 const popupImage = document.querySelector('.popup__zoom-image')
 const popupFigcaption = document.querySelector('.popup__image-caption')
 const buttonCloseZoom = document.querySelector('.popup__button-close_type_figure')
+const popupList = document.querySelectorAll('.popup')
 
 function createElement(name, link) {
     const htmlElement = elementTemplate.cloneNode(true);
@@ -74,20 +75,27 @@ initialCards.forEach(function (el) {
     renderElement(el.name, el.link)
 });
 
-buttonEdit.addEventListener('click', () => openPopup(popupProfile))
 buttonEdit.addEventListener('click', () => openPopupProfile())
 buttonAdd.addEventListener('click', () => openPopup(popupAddPlace))
 
 function openPopup(popup) {
     popup.classList.add('popup_opened')
+    document.addEventListener('keydown', (evt) => {
+        if (evt.key === 'Escape') {
+            closePopup(popup)
+        }
+    })
 }
 
 function openPopupProfile() {
     nameInput.value = currentName.textContent
     jobInput.value = currentAbout.textContent
+    openPopup(popupProfile)
 }
 
-function closePopup(popup) { popup.classList.remove('popup_opened') }
+function closePopup(popup) {
+    popup.classList.remove('popup_opened')
+}
 
 buttonCloseProfile.addEventListener('click', () => closePopup(popupProfile))
 buttonClosePlace.addEventListener('click', () => closePopup(popupAddPlace))
@@ -113,6 +121,7 @@ function addNewElement(evt) {
     linkInput.value = '';
     closePopup(popupAddPlace)
 }
+
 formAddElement.addEventListener('submit', addNewElement);
 
 function zoomImage(name, link) {
@@ -123,3 +132,11 @@ function zoomImage(name, link) {
 }
 
 buttonCloseZoom.addEventListener('click', () => closePopup(popupZoom))
+
+popupList.forEach((popupElement) => {
+    popupElement.addEventListener('click', (evt) => {
+        if (evt.target === evt.currentTarget) {
+            closePopup(evt.currentTarget);
+        }
+    })
+})
