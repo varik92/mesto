@@ -1,3 +1,6 @@
+import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
+
 const initialCards = [
     {
         name: 'Архыз',
@@ -44,33 +47,11 @@ const popupImage = document.querySelector('.popup__zoom-image')
 const popupFigcaption = document.querySelector('.popup__image-caption')
 const popupList = document.querySelectorAll('.popup')
 
-function createElement(name, link) {
-    const htmlElement = elementTemplate.cloneNode(true);
-    htmlElement.querySelector('.element__title').textContent = name;
-    const elementImage = htmlElement.querySelector('.element__image');
-    elementImage.src = link;
-    elementImage.alt = name;
-    htmlElement.querySelector('.element__like-button').addEventListener('click', function (evt) {
-        evt.target.classList.toggle('element__like-button_active');
-    });
-    htmlElement.querySelector('.element__delete-button').addEventListener('click', function (evt) {
-        evt.target.closest('.element').remove();
-    });
-    elementImage.addEventListener('click', function (evt) {
-        zoomImage(name, link);
-    })
-    return htmlElement;
-}
-
 function renderElement(name, link) {
-    elementList.prepend(createElement(name, link));
+    const cardElement = new Card({ name, link }, '.element-template').generateCard();
+
+    elementList.prepend(cardElement);
 }
-
-initialCards.reverse();
-
-initialCards.forEach(function (el) {
-    renderElement(el.name, el.link)
-});
 
 buttonEdit.addEventListener('click', () => openPopupProfile())
 buttonAdd.addEventListener('click', () => openPopupPlace())
@@ -107,11 +88,8 @@ function closePopup(popup) {
 function formSubmitHandler(evt) {
     evt.preventDefault();
 
-    const newName = nameInput.value
-    const newAbout = jobInput.value
-
-    currentName.textContent = newName
-    currentAbout.textContent = newAbout
+    currentName.textContent = nameInput.value
+    currentAbout.textContent = jobInput.value
     closePopup(popupProfile)
 }
 
@@ -121,6 +99,7 @@ function addNewElement(evt) {
     evt.preventDefault();
 
     renderElement(placeInput.value, linkInput.value)
+
     placeInput.value = '';
     linkInput.value = '';
     closePopup(popupAddPlace)
@@ -141,4 +120,26 @@ popupList.forEach((popupElement) => {
             closePopup(popupElement);
         };
     });
-}); 
+});
+
+initialCards.reverse();
+
+initialCards.forEach((item) => {
+    renderElement(item.name, item.link)
+});
+
+const validationSettings = {
+    formSelector: '.popup__form',
+    inputSelector: '.input',
+    submitButtonSelector: '.popup__button-save',
+    inactiveButtonClass: 'popup__button-save_disabled',
+    inputErrorClass: 'input_error',
+    errorClass: 'popup__error_visible',
+}
+
+const formList = Array.from(document.querySelectorAll('.popup__form'));
+formList.forEach((formPopupElement) => {
+    new FormValidator(validationSettings, formPopupElement).enableValidation()
+});
+
+export { zoomImage }
