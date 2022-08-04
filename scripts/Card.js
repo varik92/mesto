@@ -1,20 +1,18 @@
 import { zoomImage as _zoomImage } from './index.js'
 
 class Card {
-    constructor(data, cardSelector) {
+    constructor(data, cardTemplate) {
         this._name = data.name;
         this._link = data.link;
-        this._selector = cardSelector;
+        this._cardTemplate = cardTemplate;
     }
 
     _getTemplate() {
-        const cardElement = document.querySelector(this._selector).content.cloneNode(true);
-
-        return cardElement;
+        return this._cardTemplate.querySelector(".element").cloneNode(true);
     }
 
-    _deleteCard(evt) {
-        evt.target.closest('.element').remove()
+    _deleteCard() {
+        this._element.remove()
     }
 
     _toggleLikeButton(evt) {
@@ -25,19 +23,21 @@ class Card {
         this._element.querySelector('.element__like-button').addEventListener('click', (evt) => {
             this._toggleLikeButton(evt);
         });
-        this._element.querySelector('.element__delete-button').addEventListener('click', (evt) => {
-            this._deleteCard(evt);
+        this._element.querySelector('.element__delete-button').addEventListener('click', () => {
+            this._deleteCard();
         });
-        this._element.querySelector('.element__image').addEventListener('click', () => {
+        this._elementImage.addEventListener('click', () => {
             _zoomImage(this._name, this._link);
         })
     }
 
     generateCard() {
         this._element = this._getTemplate();
+        this._elementImage = this._element.querySelector('.element__image');
+        this._elementImage.src = this._link;
+        this._elementTitle = this._element.querySelector('.element__title');
+        this._elementTitle.textContent = this._name;
         this._setEventListeners();
-        this._element.querySelector('.element__image').src = this._link;
-        this._element.querySelector('.element__title').textContent = this._name;
 
         return this._element;
     }

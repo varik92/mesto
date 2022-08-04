@@ -48,7 +48,7 @@ const popupFigcaption = document.querySelector('.popup__image-caption')
 const popupList = document.querySelectorAll('.popup')
 
 function renderElement(name, link) {
-    const cardElement = new Card({ name, link }, '.element-template').generateCard();
+    const cardElement = new Card({ name, link }, elementTemplate).generateCard();
 
     elementList.prepend(cardElement);
 }
@@ -63,8 +63,7 @@ function openPopup(popup) {
 
 function openPopupPlace() {
     openPopup(popupAddPlace);
-    popupAddPlace.querySelector('.popup__button-save').setAttribute("disabled", true);
-    popupAddPlace.querySelector('.popup__button-save').classList.add('popup__button-save_disabled');
+    new FormValidator(validationSettings, popupAddPlace).disableSubmitButton();
 }
 
 function closeByEsc(evt) {
@@ -121,8 +120,6 @@ popupList.forEach((popupElement) => {
         };
     });
 });
-
-initialCards.reverse();
 
 initialCards.forEach((item) => {
     renderElement(item.name, item.link)
