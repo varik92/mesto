@@ -63,7 +63,7 @@ function openPopup(popup) {
 
 function openPopupPlace() {
     openPopup(popupAddPlace);
-    new FormValidator(validationSettings, popupAddPlace).disableSubmitButton();
+    popupAddPlaceValidation.disableSubmitButton();
 }
 
 function closeByEsc(evt) {
@@ -133,10 +133,7 @@ const validationSettings = {
     inputErrorClass: 'input_error',
     errorClass: 'popup__error_visible',
 }
-
-const formList = Array.from(document.querySelectorAll('.popup__form'));
-formList.forEach((formPopupElement) => {
-    new FormValidator(validationSettings, formPopupElement).enableValidation()
-});
+const popupProfileValidation = new FormValidator(validationSettings, popupProfile).enableValidation()
+const popupAddPlaceValidation = new FormValidator(validationSettings, popupAddPlace).enableValidation()
 
 export { zoomImage }
