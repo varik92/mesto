@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Место</title>
-    <link rel="stylesheet" href="./pages/index.css">
+    <!--<link rel="stylesheet" href="./pages/index.css">-->
 </head>
 
 <body class="body">
@@ -17,7 +17,7 @@
         <main>
             <section class="profile">
                 <div class="profile__main">
-                    <img src="./images/profile.jpg" alt="Аватар" class="profile__avatar">
+                    <img src="<%=require('./images/profile.jpg')%>" alt="Аватар" class="profile__avatar">
                     <div class="profile__column">
                         <div class="profile__info">
                             <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -35,12 +35,12 @@
                     <button type="button" aria-label="Закрыть"
                         class="popup__button-close popup__button-close_type_profile"></button>
                     <form name="form1" action="#" class="popup__form popup__form_type_profile" novalidate>
-                        <input type="text" name="Имя" value="Жак-Ив Кусто" id="name" class="input input_type_name"
+                        <input type="text" name="name" value="Жак-Ив Кусто" id="name" class="input input_type_name"
                             required minlength="2" maxlength="40">
                         <span id="name-error" class="popup__error"></span>
-                        <input type="text" name="О себе" value="Исследователь океана" id='about'
+                        <input type="text" name="about" value="Исследователь океана" id='about'
                             class="input input_type_about" required minlength="2" maxlength="200">
-                        <span id="about-error" class="popup__error">123</span>
+                        <span id="about-error" class="popup__error"></span>
                         <button type="submit" aria-label="Сохранить"
                             class="popup__button-save popup__button-save_type_profile"
                             value="Сохранить">Сохранить</button>
@@ -53,10 +53,10 @@
                     <button type="button" aria-label="Закрыть"
                         class="popup__button-close popup__button-close_type_place"></button>
                     <form name="form2" action="#" class="popup__form popup__form_type_place" novalidate>
-                        <input type="text" name="Название" placeholder="Название" id="place"
-                            class="input input_type_place" required minlength="2" maxlength="30">
+                        <input type="text" name="place" placeholder="Название" id="place" class="input input_type_place"
+                            required minlength="2" maxlength="30">
                         <span id="place-error" class="popup__error"></span>
-                        <input type="url" name="Ссылка на картинку" placeholder="Ссылка на картинку" id="link"
+                        <input type="url" name="link" placeholder="Ссылка на картинку" id="link"
                             class="input input_type_link" required>
                         <span id="link-error" class="popup__error"></span>
                         <button type="submit" aria-label="Создать"
@@ -91,7 +91,7 @@
             <p class="footer">© 2020 Mesto Russia</p>
         </footer>
     </div>
-    <script type="module" src="./scripts/index.js"></script>
+    <!--<script type="module" src="./pages/index.js"></script>-->
 </body>
 
 </html>

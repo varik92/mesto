@@ -1,10 +1,11 @@
-import { zoomImage as _zoomImage } from './index.js'
+import { PopupWithImage } from './PopupWithImage.js'
 
 class Card {
-    constructor(data, cardTemplate) {
+    constructor(data, cardTemplate, handleCardClick) {
         this._name = data.name;
         this._link = data.link;
         this._cardTemplate = cardTemplate;
+        this.handleCardClick = handleCardClick;
     }
 
     _getTemplate() {
@@ -27,7 +28,7 @@ class Card {
             this._deleteCard();
         });
         this._elementImage.addEventListener('click', () => {
-            _zoomImage(this._name, this._link);
+            this.handleCardClick({ name: this._name, link: this._link })
         })
     }
 
