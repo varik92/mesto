@@ -5,8 +5,9 @@ export class UserInfo {
     }
     getUserInfo() {
         this._userInfo = {}
-        this._userInfo.name = this._currentName
-        this._userInfo.about = this._currentAbout
+        this._userInfo.name = this._currentName.textContent
+        this._userInfo.about = this._currentAbout.textContent
+
         return this._userInfo
     }
     setUserInfo({ name, about }) {

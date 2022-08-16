@@ -1,5 +1,3 @@
-import { PopupWithImage } from './PopupWithImage.js'
-
 class Card {
     constructor(data, cardTemplate, handleCardClick) {
         this._name = data.name;
@@ -36,6 +34,7 @@ class Card {
         this._element = this._getTemplate();
         this._elementImage = this._element.querySelector('.element__image');
         this._elementImage.src = this._link;
+        this._elementImage.alt = this._name;
         this._elementTitle = this._element.querySelector('.element__title');
         this._elementTitle.textContent = this._name;
         this._setEventListeners();

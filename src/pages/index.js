@@ -19,6 +19,7 @@ import {
     popupImage,
     popupFigcaption,
     popupList,
+    initialCards
 } from '../utils/constants.js'
 
 import { Card } from "../components/Card.js";
@@ -29,52 +30,16 @@ import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js"
 
-const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
+const popupZoomImage = new PopupWithImage('.popup_type_zoom-image')
+popupZoomImage.setEventListeners()
 
+const initialCardsSection = new Section((card) => {
+    const cardElement = new Card(card, elementTemplate, (data) => { popupZoomImage.open(data) }).generateCard();
+    initialCardsSection.addItem(cardElement)
+}, '.elements__list')
 
+initialCardsSection.renderItems(initialCards)
 
-function renderElement(data) {
-    const initialCardsSection = new Section({
-        items: data,
-        renderer: (card) => {
-            const cardElement = new Card(card, elementTemplate, (data) => {
-                const popupZoomImage = new PopupWithImage(data, '.popup_type_zoom-image')
-                popupZoomImage.open()
-                popupZoomImage.setEventListeners()
-            }
-            ).generateCard();
-
-            initialCardsSection.addItem(cardElement)
-        }
-    }, '.elements__list')
-
-    initialCardsSection.renderItems()
-}
 const userInfo = new UserInfo({ name: '.profile__name', about: '.profile__description' })
 
 const openPopupProfile = new PopupWithForm('.popup_type_edit-profile', (formValues) => {
@@ -85,20 +50,17 @@ const openPopupProfile = new PopupWithForm('.popup_type_edit-profile', (formValu
 buttonEdit.addEventListener('click', () => {
     openPopupProfile.open();
     const userValues = userInfo.getUserInfo()
-    nameInput.value = userValues.name.textContent
-    jobInput.value = userValues.about.textContent
+    openPopupProfile.setInputValues(userValues)
 })
 openPopupProfile.setEventListeners()
 
-const openPopupPlace = new PopupWithForm('.popup_type_add-place', () => {
+const openPopupPlace = new PopupWithForm('.popup_type_add-place', (data) => {
     popupAddPlaceValidation.disableSubmitButton();
-    renderElement([{ name: placeInput.value, link: linkInput.value }])
+    initialCardsSection.renderItems([data])
     openPopupPlace.close()
 })
-buttonAdd.addEventListener('click', () => openPopupPlace.open())
+buttonAdd.addEventListener('click', () => { openPopupPlace.open(), popupAddPlaceValidation.resetValidation() })
 openPopupPlace.setEventListeners()
-
-renderElement(initialCards)
 
 const validationSettings = {
     formSelector: '.popup__form',
