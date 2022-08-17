@@ -19,7 +19,8 @@ import {
     popupImage,
     popupFigcaption,
     popupList,
-    initialCards
+    initialCards,
+    validationSettings
 } from '../utils/constants.js'
 
 import { Card } from "../components/Card.js";
@@ -49,27 +50,22 @@ const openPopupProfile = new PopupWithForm('.popup_type_edit-profile', (formValu
 })
 buttonEdit.addEventListener('click', () => {
     openPopupProfile.open();
+    popupProfileValidation.resetValidation();
     const userValues = userInfo.getUserInfo()
     openPopupProfile.setInputValues(userValues)
 })
 openPopupProfile.setEventListeners()
 
 const openPopupPlace = new PopupWithForm('.popup_type_add-place', (data) => {
-    popupAddPlaceValidation.disableSubmitButton();
     initialCardsSection.renderItems([data])
     openPopupPlace.close()
 })
-buttonAdd.addEventListener('click', () => { openPopupPlace.open(), popupAddPlaceValidation.resetValidation() })
+buttonAdd.addEventListener('click', () => {
+    openPopupPlace.open();
+    popupAddPlaceValidation.resetValidation();
+})
 openPopupPlace.setEventListeners()
 
-const validationSettings = {
-    formSelector: '.popup__form',
-    inputSelector: '.input',
-    submitButtonSelector: '.popup__button-save',
-    inactiveButtonClass: 'popup__button-save_disabled',
-    inputErrorClass: 'input_error',
-    errorClass: 'popup__error_visible',
-}
 const popupProfileValidation = new FormValidator(validationSettings, popupProfile)
 const popupAddPlaceValidation = new FormValidator(validationSettings, popupAddPlace)
 popupProfileValidation.enableValidation()
