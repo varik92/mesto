@@ -7,17 +7,11 @@ export class PopupDelete extends Popup {
         this._deleteCallback = deleteCallback
     }
 
-    open(id, currentCardElement) {
-        super.open()
-        this._cardId = id;
-        this._currentCardElement = currentCardElement
-    }
-
     setEventListeners() {
         super.setEventListeners()
         this._confirmDeleteButton.addEventListener('click', (evt) => {
             evt.preventDefault();
-            this._deleteCallback(this._cardId, this._currentCardElement)
+            this._deleteCallback()
         })
     }
 }
