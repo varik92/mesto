@@ -1,10 +1,10 @@
 export const elementTemplate = document.querySelector('.element-template').content
-export const popupProfile = document.querySelector('.popup_type_edit-profile')
+export const popupProfileElement = document.querySelector('.popup_type_edit-profile')
 export const buttonEdit = document.querySelector('.profile__edit-button')
-export const popupAddPlace = document.querySelector('.popup_type_add-place')
+export const popupAddPlaceElement = document.querySelector('.popup_type_add-place')
 export const buttonAdd = document.querySelector('.profile__add-button')
 export const buttonAvatar = document.querySelector('.profile__avatar-edit-button')
-export const popupAvatar = document.querySelector('.popup_type_change-avatar')
+export const popupAvatarElement = document.querySelector('.popup_type_change-avatar')
 
 export const validationSettings = {
     formSelector: '.popup__form',

@@ -2,13 +2,13 @@ import './index.css';
 
 import {
     elementTemplate,
-    popupProfile,
+    popupProfileElement,
     buttonEdit,
-    popupAddPlace,
+    popupAddPlaceElement,
     buttonAdd,
     validationSettings,
     buttonAvatar,
-    popupAvatar
+    popupAvatarElement
 } from '../utils/constants.js'
 
 import {
@@ -72,62 +72,67 @@ const cardsContainer = new Section((card) => {
 
 const popupDelete = new PopupDelete('.popup_type_delete-confirm', () => {
     api.deleteCard(currentCardId)
-        .then(() => currentCardElement.remove()).catch((err) => console.log(err))
-    popupDelete.close()
+        .then(() => {
+            currentCardElement.remove()
+            popupDelete.close()
+        }).catch((err) => console.log(err))
 })
 
 popupDelete.setEventListeners()
 
 const userInfo = new UserInfo({ name: '.profile__name', about: '.profile__description', avatar: '.profile__avatar' })
 
-const openPopupProfile = new PopupWithForm('.popup_type_edit-profile', (formValues, button) => {
+const popupProfile = new PopupWithForm('.popup_type_edit-profile', (formValues, button) => {
     userInfo.setUserInfo(formValues)
     addProgress(button)
     api.editUserInfo(formValues)
+        .then(() => popupProfile.close())
         .catch((err) => console.log(err))
         .finally(() => removeProgress(button))
-    openPopupProfile.close()
 })
 buttonEdit.addEventListener('click', () => {
-    openPopupProfile.open();
+    popupProfile.open();
     popupProfileValidation.resetValidation();
     const userValues = userInfo.getUserInfo(api.getUserInfo())
-    openPopupProfile.setInputValues(userValues)
+    popupProfile.setInputValues(userValues)
 })
-openPopupProfile.setEventListeners()
+popupProfile.setEventListeners()
 
-const openPopupPlace = new PopupWithForm('.popup_type_add-place', (data, button) => {
+const popupPlace = new PopupWithForm('.popup_type_add-place', (data, button) => {
     addProgress(button)
-    api.addNewCard(data).then((res) => {
-        cardsContainer.addItem(createCard(res))
-    })
+    api.addNewCard(data)
+        .then((res) => {
+            cardsContainer.addItem(createCard(res))
+            popupPlace.close()
+        })
         .catch((err) => console.log(err))
         .finally(() => removeProgress(button))
-    openPopupPlace.close()
 })
+
 buttonAdd.addEventListener('click', () => {
-    openPopupPlace.open();
+    popupPlace.open();
     popupAddPlaceValidation.resetValidation();
 })
-openPopupPlace.setEventListeners()
+popupPlace.setEventListeners()
 
-const openPopupAvatar = new PopupWithForm('.popup_type_change-avatar', (data, button) => {
+const popupAvatar = new PopupWithForm('.popup_type_change-avatar', (data, button) => {
     addProgress(button)
     api.changeAvatar(data)
-        .then((data) => userInfo.setUserAvatar(data))
+        .then((data) => {
+            userInfo.setUserAvatar(data)
+            popupAvatar.close()
+        })
         .catch((err) => console.log(err))
         .finally(() => removeProgress(button))
-
-    openPopupAvatar.close()
 })
 buttonAvatar.addEventListener('click', () => {
-    openPopupAvatar.open()
+    popupAvatar.open()
     popupAvatarValidation.resetValidation();
 })
-openPopupAvatar.setEventListeners()
-const popupProfileValidation = new FormValidator(validationSettings, popupProfile)
-const popupAddPlaceValidation = new FormValidator(validationSettings, popupAddPlace)
+popupAvatar.setEventListeners()
+const popupProfileValidation = new FormValidator(validationSettings, popupProfileElement)
+const popupAddPlaceValidation = new FormValidator(validationSettings, popupAddPlaceElement)
 popupProfileValidation.enableValidation()
 popupAddPlaceValidation.enableValidation()
-const popupAvatarValidation = new FormValidator(validationSettings, popupAvatar)
+const popupAvatarValidation = new FormValidator(validationSettings, popupAvatarElement)
 popupAvatarValidation.enableValidation()
